@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.abc.employeemanagement.exception.ResourceNotFoundException;
 import com.abc.employeemanagement.model.Employee;
 import com.abc.employeemanagement.repository.EmployeeRepository;
 
@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeServiceInf{
 //		}
 //		return employee;
 		Employee emp = employeeRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee id +"+id+" not available"));
+				.orElseThrow(() -> new ResourceNotFoundException(HttpStatus.NOT_FOUND,"Employee id +"+id+" not available"));
 		emp.setName(employee.getName());
 		emp.setAddress(employee.getAddress());
 		emp.setEmail(employee.getEmail());
@@ -57,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeServiceInf{
 	@Override
 	public void deleteEmployee(int id) {
 		Employee employee = employeeRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee id +"+id+" not available"));
+				.orElseThrow(() -> new ResourceNotFoundException(HttpStatus.NOT_FOUND,"Employee id +"+id+" not available"));
 		employeeRepository.delete(employee);
 	}
 
